@@ -40,6 +40,7 @@ class Document(models.Model):
     pattern = models.ForeignKey('Pattern', on_delete=models.PROTECT, related_name='pattern_document')
     document = models.FileField(upload_to='documents/', blank=True, null=True)
     qr = models.ImageField(upload_to='qr/', blank=True, null=True)
+    confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

@@ -11,6 +11,3 @@ class GetConfirmDocument(generics.RetrieveUpdateAPIView):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     lookup_field = 'id'
-
-    # def post(self, request, *args, **kwargs):
-    #     return self.create(request, *args, **kwargs)
