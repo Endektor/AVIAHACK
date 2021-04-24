@@ -76,6 +76,6 @@ def document_creation(sender, *args, **kwargs):
     except:
         pass
     document_obj.document.save(document_obj.name + '.docx', ContentFile(file_bytes.read()), save=True)
-    convert(document_obj.document.path)
+    os.system('abiword --to=pdf ' + document_obj.document.path)
     with open(document_obj.document.path[:-4] + 'pdf', 'rb') as f:
         document_obj.document.save(document_obj.name + '.pdf', File(f), save=True)

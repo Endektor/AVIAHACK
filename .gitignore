@@ -1,7 +1,9 @@
 venv
-backend/*/migrations
+backend/*/migrations/*
 .idea
 *.log
 */db*
 */media/
 */.env
+frontend
+*/__pycache__
