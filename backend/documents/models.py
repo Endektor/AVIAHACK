@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
-from django.utils import timezone, dateformat
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files import File
 from django.core.files.base import ContentFile
@@ -11,6 +10,8 @@ import os
 import docx
 import qrcode
 from itertools import product
+from docx2pdf import convert
+import datetime
 
 
 class Pattern(models.Model):
@@ -30,8 +31,12 @@ class Field(models.Model):
         return self.key
 
 
+def get_name():
+    return datetime.datetime.today().strftime("%Y-%m-%d_%H-%M-%S")
+
+
 class Document(models.Model):
-    name = models.CharField(max_length=128, blank=True, default=dateformat.format(timezone.now(), 'Y-m-d_H-i-s'))
+    name = models.CharField(max_length=128, blank=True, default=get_name)
     pattern = models.ForeignKey('Pattern', on_delete=models.PROTECT, related_name='pattern_document')
     document = models.FileField(upload_to='documents/', blank=True, null=True)
     qr = models.ImageField(upload_to='qr/', blank=True, null=True)
@@ -70,3 +75,6 @@ def document_creation(sender, *args, **kwargs):
     except:
         pass
     document_obj.document.save(document_obj.name + '.docx', ContentFile(file_bytes.read()), save=True)
+    convert(document_obj.document.path)
+    with open(document_obj.document.path[:-4] + 'pdf', 'rb') as f:
+        document_obj.document.save(document_obj.name + '.pdf', File(f), save=True)

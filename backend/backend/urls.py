@@ -8,7 +8,7 @@ from documents import views as documents_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # url(r'^api/document/(?P<id>[0-9]+)$', documents_views.GetConfirmDocument.as_view()),
+    url(r'^api/document/(?P<id>[0-9]+)$', documents_views.GetConfirmDocument.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
