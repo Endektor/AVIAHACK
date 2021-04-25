@@ -9,15 +9,23 @@ services:
             - 8080
         volumes:
             - ./backend:/usr/src/backend
+              #frontend:
+              #build:
+              #context: ./frontend
+              #command: npm run-script build
+              #volumes:
+              #- build_folder:/frontend/build
     nginx:
         build:
             context: ./nginx
         ports:
             - 8000:8080
         volumes:
-            # - build_folder:/var/www/frontend
+                #- build_folder:/var/www/frontend
             - ./backend:/usr/src/backend
         depends_on:
             - backend
               #- frontend
 
+              #volumes:
+        #    build_folder:

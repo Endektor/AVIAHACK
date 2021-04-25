@@ -41,7 +41,7 @@ class Document(models.Model):
     document = models.FileField(upload_to='documents/', blank=True, null=True)
     qr = models.ImageField(upload_to='qr/', blank=True, null=True)
     confirmed = models.BooleanField(default=False)
-    confirmed_datetime = models.DateTimeField(blank=True)
+    confirmed_datetime = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.name
